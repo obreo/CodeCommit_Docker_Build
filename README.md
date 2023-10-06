@@ -1,5 +1,5 @@
 # AWS CodeCommit in Simple English: Build & Push Docker Container
-[Architecture](.architecture.png)
+![Architecture](architecture.png)
 
 ## This tutorial explains how AWS CodeCommit works and applies the Jenkins Pipeline Project as a Pipeline.
 
@@ -48,14 +48,18 @@ I used the same steps in the Jenkins project with the same app in this example.
 3. Following the written instructions in the AWS CodeCommit Dashboard, copy the git repository and clone it with git:
 
 '''
+
 git clone https://REPO_URL.git
+
 '''
 4. A New Folder will be created that represents the cloned repository files. Copy your application files to the folder created. Then push the files:
 
 '''
+
 git add .
 git commit -m "Updated"
 git push
+
 '''
 A window will pop up and ask for signing in, add the git credentials downloaded from AWS IAM.
 
