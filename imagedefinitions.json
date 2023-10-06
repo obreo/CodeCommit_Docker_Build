@@ -1,0 +1,23 @@
+[
+  {
+    "name": "NAME_OF_CONTAINER",
+    "imageUri": "IMAGE_URI_IN_ECR",
+    "memory": 512,   // The amount of memory (in MiB) to allocate to the container
+    "cpu": 256,      // The amount of CPU units to allocate to the container
+    "essential": true,  // Set to true if this container is essential for the task
+    
+    "portMappings": [
+      {
+      "containerPort": 80,  // The port on which your container listens
+      "hostPort": 80        // The port on the host instance to map to
+      }
+    ],
+    
+    "environment": [
+    {
+      "name": "ENV_VARIABLE_NAME",
+      "value": "ENV_VARIABLE_VALUE"
+    }
+  ]
+}
+]

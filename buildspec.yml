@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  variables:
+    REPO_URI: "ECR_REPOSITORY_URI"
+    IMAGE_NAME: ""
+    REGION: "us-east-1"
+    ecsService: "ECS_SERVICE_NAME"
+    ecsCluster: "ECS_CLUSTER_NAME"
+    taskDefinition: "TASK_DEFINITION_NAME"
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in AWS ECR...
+      - aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $REPO_URI
+
+  build:
+    commands:
+      - echo Building Docker Image...
+      - docker build -t $IMAGE_NAME:latest .
+      - docker tag $IMAGE_NAME:latest $REPO_URI/$IMAGE_NAME:latest
+
+  post_build:
+    commands:
+      - echo Pushing Docker Image to ECR Repo...
+      - docker push $REPO_URI/$IMAGE_NAME:latest
+
+artifacts:
+  files: imagedefinitions.json #This will build a task definition file (optional)
