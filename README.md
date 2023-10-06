@@ -47,21 +47,21 @@ I used the same steps in the Jenkins project with the same app in this example.
 2. From the Navigation bar at the left, click on CodeCommit and create a new repo.
 3. Following the written instructions in the AWS CodeCommit Dashboard, copy the git repository and clone it with git:
 
-'''
+```
 
 git clone https://REPO_URL.git
 
-'''
+```
 
 4. A New Folder will be created that represents the cloned repository files. Copy your application files to the folder created. Then push the files:
 
-'''
+```
 
 git add .
 git commit -m "Updated"
 git push
 
-'''
+```
 
 A window will pop up and ask for signing in, add the git credentials downloaded from AWS IAM.
 
@@ -95,7 +95,7 @@ There are three stages of building but they all can be done with one stage only.
 2. Build: This is where the code would be compiled. Includes all the commands required to make it ready.
 3. PostBuild: This is used for taking an action once an app is compiled, such as reporting or clearing the process when done or maybe uploading the file to some service.
 
-'''
+```
 
 version: 0.2
 
@@ -157,11 +157,11 @@ phases:
   #paths:
     # - paths
 
-'''
+```
 
 Our script would build the docker image, and then push it to the AWS ECR repository:
 
-'''
+```
 
 version: 0.2
 
@@ -194,11 +194,11 @@ phases:
 artifacts:
   files: imagedefinitions.json #This will build a task definition file (optional)
 
-'''
+```
 
 **Here is how an Artifact is written:**
 
-'''
+```
 [
     {
       "name": "NAME_OF_CONTAINER",
@@ -223,7 +223,8 @@ artifacts:
   }
 ]
   
-'''
+```
+
 
 
 
@@ -233,9 +234,9 @@ This would deploy the app we built in CodeBuild using the artifact file to an EC
 
 On ther other hand, you can skip this option and rely on codeBuild alone by adding extra step to update the the service with the new task update:
 
-'''
+```
 aws ecs update-service --region us-east-1 --service $ecsService --cluster $ecsCluster --task-definition $taskDefinition
-'''
+```
 
 But we'd skip this to the Pipeline which have more user firendly CodeDeploy configurations. 
 
