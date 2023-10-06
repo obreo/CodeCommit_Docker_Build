@@ -52,6 +52,7 @@ I used the same steps in the Jenkins project with the same app in this example.
 git clone https://REPO_URL.git
 
 '''
+
 4. A New Folder will be created that represents the cloned repository files. Copy your application files to the folder created. Then push the files:
 
 '''
@@ -61,6 +62,7 @@ git commit -m "Updated"
 git push
 
 '''
+
 A window will pop up and ask for signing in, add the git credentials downloaded from AWS IAM.
 
 Now all the files should be available in the CodeCommit repository.
@@ -94,6 +96,7 @@ There are three stages of building but they all can be done with one stage only.
 3. PostBuild: This is used for taking an action once an app is compiled, such as reporting or clearing the process when done or maybe uploading the file to some service.
 
 '''
+
 version: 0.2
 
 #env:
@@ -153,10 +156,13 @@ phases:
 #cache:
   #paths:
     # - paths
+
 '''
+
 Our script would build the docker image, and then push it to the AWS ECR repository:
 
 '''
+
 version: 0.2
 
 env:
@@ -189,7 +195,9 @@ artifacts:
   files: imagedefinitions.json #This will build a task definition file (optional)
 
 '''
+
 **Here is how an Artifact is written:**
+
 '''
 [
     {
