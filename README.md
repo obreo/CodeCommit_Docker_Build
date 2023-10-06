@@ -18,6 +18,7 @@ A Git repository that stores and controls the application's files that would be 
 It builds the application stored in CodeCommit under a set of steps coded in a .yaml formatted file called "Buildspec.yaml". 
 
 This is similar to the "Jenkinsfile" in Jenkins, GitHub Actions Template files, and other CICD platform workflow files.
+
 4. CodeDeploy: This would deploy the compiled code in CodeBuild or the file stored in your repo to one of the AWS services- eg. EC2, ECS, and S3..etc
 5. AWS Pipeline: This would run an automated workflow using one or all of the previous stages whenever an event occurs to the repository in CodeCommit, or other repo platforms like GitHub, GitLab, or Bitbucket.. Etc.
 
