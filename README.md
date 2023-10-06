@@ -1,7 +1,7 @@
 # AWS CodeCommit in Simple English: Build & Push Docker Container
 ![Architecture](architecture.png)
 
-## This tutorial explains how AWS CodeCommit works and applies the Jenkins Pipeline Project as a Pipeline.
+## This tutorial explains how AWS CodeCommit works and builds, and pushes Docker Image to ECS as a Pipeline.
 
 ### INTRODUCTION
 
@@ -9,7 +9,7 @@ AWS CodeCommit is a service that delivers a complete DevOps Package starting wit
 
 #### Explaining in Detail:
 
-AWS CodeCommit service mainly includes four stages in which each stage represents an independent service which is integrated together to create a CI/CD workflow:
+AWS CodeCommit service mainly includes four stages in which each stage represents an independent service that is integrated together to create a CI/CD workflow:
 
 1. CodeCommit(Optional - if other git repository used): 
 A Git repository that stores and controls the application's files that would be compiled and deployed.
@@ -23,7 +23,7 @@ This is similar to the "Jenkinsfile" in Jenkins, GitHub Actions Template files, 
 
 ### Project Demonstration
 
-I used the same steps in the Jenkins project with the same app in this example.
+I used the same steps in the [Jenkins project](https://github.com/obreo/Jenkins-to-ECS-ECR-Pipeline) with the same app in this example.
 
 #### Prerequisites:
 
@@ -33,7 +33,7 @@ I used the same steps in the Jenkins project with the same app in this example.
 4. AWS CodeDeploy Role(automatically created by the service): that authenticates to AWS ECS.
 5. Git installed on your machine.
 6. AWS ECR repository
-7. AWS ECS task, service and cluster
+7. AWS ECS task, service, and cluster
 
 ### Steps
 
@@ -204,7 +204,7 @@ artifacts:
       "name": "NAME_OF_CONTAINER",
       "imageUri": "IMAGE_URI_IN_ECR",
       "memory": 512,   // The amount of memory (in MiB) to allocate to the container
-      "cpu": 256,      // The amount of CPU units to allocate to the container
+      "CPU": 256,      // The amount of CPU units to allocate to the container
       "essential": true,  // Set to true if this container is essential for the task
       
       "portMappings": [
@@ -232,25 +232,25 @@ artifacts:
 
 This would deploy the app we built in CodeBuild using the artifact file to an ECS Cluster. Alternatively, you can choose an artifact file from your repository using the SourceArtifact. 
 
-On ther other hand, you can skip this option and rely on codeBuild alone by adding extra step to update the the service with the new task update:
+On the other hand, you can skip this option and rely on codeBuild alone by adding an extra step to update the service with the new task update:
 
 ```
 aws ecs update-service --region us-east-1 --service $ecsService --cluster $ecsCluster --task-definition $taskDefinition
 ```
 
-But we'd skip this to the Pipeline which have more user firendly CodeDeploy configurations. 
+But we'd skip this to the Pipeline which has more user-friendly CodeDeploy configurations. 
 
 #### AWS Pipeline
 
 1. From the AWS CodeCommit dashboard, browse to Pipelines in the navigation bar. 
 2. Configure the service settings then continue.
-3. There are three stages to be assigned. we'll choose the same configurations we prepared in each stage; CodeCommit for source stage , CodeBuild for building stage, and CodeDeploy for deployment stage.
-4. For the deployment: Configure the service settings by choosing ECS, and specify the SourceArtifact(if stored in repo) or BuildArtifact (the one codeBuild exported).
+3. There are three stages to be assigned. we'll choose the same configurations we prepared in each stage; CodeCommit for the source stage, CodeBuild for the building stage, and CodeDeploy for the deployment stage.
+4. For the deployment: Configure the service settings by choosing ECS, and specify the SourceArtifact(if stored in the repo) or BuildArtifact (the one codeBuild exported).
 
-**Once done, start the build and it shall work. If any eror occures, read the Logs and troubleshoot**.
+**Once done, start the build and it shall work. If any error occurs, read the Logs and troubleshoot**.
 
 ### Alternatively
 
-1. Create a pipleine between the codecommit repositroy and Build only, where CodeBuild will inlude the command that updates the ECS service as mentioned before.
+1. Create a pipeline between the code-commit repository and Build only, where CodeBuild will include the command that updates the ECS service as mentioned before.
 2. Skip the Deploy process.
 3. Make sure the Build has a role to access ECS.
