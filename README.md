@@ -1,5 +1,5 @@
 # AWS CodeCommit in Simple English: Build & Push Docker Container
-[Architecture](.architecture.png)
+[Architecture](architecture.png)
 
 ## This tutorial explains how AWS CodeCommit works and applies the Jenkins Pipeline Project as a Pipeline.
 
